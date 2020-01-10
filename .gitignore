@@ -1,0 +1,13 @@
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
+# rspec failure tracking
+.rspec_status
+.rubocop-https---raw-githubusercontent-com-talentplatforms-shared-rubocop-master--talentplatforms-rubocop-yml
+*.gem
