@@ -1,5 +1,15 @@
 # RopenPi
 
+This is a fork of the [open-api-rswag gem](https://github.com/jdanielian/open-api-rswag).
+It's a good gem in an early development stage. The original [rswag](https://github.com/rswag/rswag) gem and the open api fork a have one thing in common: they do to much. 
+
+There are easier ways to get an instance of the swagger ui running than building it as a rails engine. 
+
+In future releases this gem will provide a basic example of how this will look like.
+
+In the mean time this will remain a WIP :)
+
+
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ropen_pi`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
