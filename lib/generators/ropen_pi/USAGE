@@ -1,0 +1,8 @@
+Description:
+  Adds open_api_helper to enable Swagger DSL in integration specs
+
+Example:
+    rails generate rswag:specs:install
+
+    This will create:
+        spec/open_api_helper.rb

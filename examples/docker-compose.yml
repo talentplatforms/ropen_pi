@@ -1,0 +1,86 @@
+version: '3.7'
+
+# shared variables to keep things DRY
+x-shared-env: &shared
+  DB_HOST: ${DB_HOST}
+  DB_USER: ${DB_USER}
+  DB_NAME: ${DB_NAME}
+  DB_PASSWORD: ${DB_PASSWORD}
+  SVC_NAME: ${SVC_NAME}
+  SVC_SHORT: ${SVC_SHORT}
+
+networks:
+  net__backend: ~
+
+  netext__traefik:
+    external: true
+
+volumes:
+  # saves the gems as a mount that's used by docker
+  bundle: ~
+
+services:
+  svc:
+    container_name: ${SVC_NAME}
+    depends_on:
+      - db
+    entrypoint: resources/docker/docker-entrypoint.sh
+    environment:
+      <<: *shared
+    image: talentplatforms/ruby:${RUBY_IMAGE_VERSION}
+    labels:
+      - org.label-schema.name=${SVC_NAME}
+      - org.label-schema.description=${SVC_DESCRIPTION}
+      - org.label-schema.version=1.0.0
+    networks:
+      - net__backend
+    stdin_open: true
+    # the tmp folder should not be kept, so it's an ephemeral mount
+    # this also speeds up requests
+    tmpfs:
+      - /app/log
+      - /app/tmp
+    tty: true
+    volumes:
+      - .:/app:cached
+      - bundle:/bundle
+
+  db:
+    container_name: ${DB_HOST}
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    image: postgres:10-alpine
+    networks:
+      - net__backend
+    ports:
+      # the db port to be used by external guis. this also needs to be changed
+      - ${DB_EXPOSED_PORT}:5432
+
+  # this is just a development helper that displays the
+  # created openApi documentation
+  # https://github.com/swagger-api/swagger-ui/tree/master/docs
+  # swagger:
+  #   container_name: ${SVC_NAME}-swagger
+  #   environment:
+  #     URLS: "[{ url: \"${SWAGGER_ENDPOINT}\", name: \"${SVC_NAME}\" }]"
+  #   image: swaggerapi/swagger-ui:v3.23.9
+  #   labels:
+  #     # traefik stuff
+  #     - traefik.enable=true
+  #     - traefik.docker.network=netext__traefik
+  #     # http
+  #     - traefik.http.routers.${SVC_NAME}-swagger.rule=Host(`swagger.${SVC_NAME}.localhost`)
+  #     - traefik.http.routers.${SVC_NAME}-swagger.entrypoints=http
+  #     - traefik.http.routers.${SVC_NAME}-swagger.service=${SVC_NAME}-swagger
+  #     - traefik.http.routers.${SVC_NAME}-swagger.middlewares.redirect=redirect@file
+  #     # https
+  #     - traefik.http.routers.${SVC_NAME}-swagger-ssl.rule=Host(`swagger.${SVC_NAME}.localhost`)
+  #     - traefik.http.routers.${SVC_NAME}-swagger-ssl.entrypoints=https
+  #     - traefik.http.routers.${SVC_NAME}-swagger-ssl.tls=true
+  #     - traefik.http.services.${SVC_NAME}-swagger.loadbalancer.server.port=8080
+  #   networks:
+  #     - netext__traefik
+  #   volumes:
+  #     - ./resources/open-api:/swagger
