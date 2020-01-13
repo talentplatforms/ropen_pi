@@ -8,7 +8,7 @@ module RopenPi
   module Specs
     # Extend RSpec with a swagger-based DSL
     ::RSpec.configure do |c|
-      c.add_setting :dir_root
+      c.add_setting :root_dir
       c.add_setting :open_api_docs
       c.add_setting :dry_run
       c.add_setting :open_api_output_format
