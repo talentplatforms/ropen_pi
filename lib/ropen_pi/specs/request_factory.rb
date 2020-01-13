@@ -95,20 +95,21 @@ class RopenPi::Specs::RequestFactory
 
   def build_query_string_part(param, value)
     name = param[:name]
-    return "#{name}=#{value}" unless param[:type].to_sym == :array
+    "#{name}=#{value}" # this needs refactoring for collections
 
-    case param[:collectionFormat]
-    when :ssv
-      "#{name}=#{value.join(' ')}"
-    when :tsv
-      "#{name}=#{value.join('\t')}"
-    when :pipes
-      "#{name}=#{value.join('|')}"
-    when :multi
-      value.map { |v| "#{name}=#{v}" }.join('&')
-    else
-      "#{name}=#{value.join(',')}" # csv is default
-    end
+    # all of this is deprecated and needs reimplementation
+    # case param[:collectionFormat]
+    # when :ssv
+    #   "#{name}=#{value.join(' ')}"
+    # when :tsv
+    #   "#{name}=#{value.join('\t')}"
+    # when :pipes
+    #   "#{name}=#{value.join('|')}"
+    # when :multi
+    #   value.map { |v| "#{name}=#{v}" }.join('&')
+    # else
+    #   "#{name}=#{value.join(',')}" # csv is default
+    # end
   end
 
   def add_headers(request, metadata, open_api_doc, parameters, example)

@@ -35,9 +35,9 @@ module RopenPi
             summary: 'Updates a blog',
             consumes: ['application/json'],
             parameters: [
-              { name: :blog_id, in: :path, type: 'integer' },
-              { name: 'id', in: :path, type: 'integer' },
-              { name: 'q1', in: :query, type: 'string' },
+              { name: :blog_id, in: :path, schema: { type: 'integer' } },
+              { name: 'id', in: :path, schema: { type: 'integer' } },
+              { name: 'q1', in: :query, schema: { type: 'string' } },
               { name: :blog, in: :body, schema: { type: 'object' } }
             ],
             security: [{ api_key: [] }]
@@ -59,8 +59,8 @@ module RopenPi
         it "submits a request built from metadata and 'let' values" do
           expect(subject).to have_received(:put).with(
             '/blogs/1/comments/2?q1=foo&api_key=fookey',
-            '{"text":"Some comment"}',
-            'CONTENT_TYPE' => 'application/json'
+            params: '{"text":"Some comment"}',
+            headers: { 'CONTENT_TYPE' => 'application/json' }
           )
         end
       end

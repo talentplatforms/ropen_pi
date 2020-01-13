@@ -9,8 +9,8 @@ module RopenPi::Specs::ExampleHelpers
     send(
       request[:verb],
       request[:path],
-      request[:payload],
-      request[:headers]
+      params: request[:payload],
+      headers: request[:headers]
     )
   end
 
