@@ -35,7 +35,8 @@ class RopenPi::Specs::ResponseValidator
   def validate_headers!(metadata, headers)
     expected = (metadata[:response][:headers] || {}).keys
     expected.each do |name|
-      raise RopenPi::Specs::UnexpectedResponse, "Expected response header #{name} to be present" if headers[name.to_s].nil?
+      raise RopenPi::Specs::UnexpectedResponse, "Expected response header #{name} to be present" \
+        if headers[name.to_s].nil?
     end
   end
 

@@ -1,9 +1,9 @@
 # RopenPi
 
 This is a fork of the [open-api-rswag gem](https://github.com/jdanielian/open-api-rswag).
-It's a good gem in an early development stage. The original [rswag](https://github.com/rswag/rswag) gem and the open api fork a have one thing in common: they do to much. 
+It's a good gem in an early development stage. The original [rswag](https://github.com/rswag/rswag) gem and the open api fork a have one thing in common: they do to much.
 
-There are easier ways to get an instance of the swagger ui running than building it as a rails engine. 
+There are easier ways to get an instance of the swagger ui running than building it as a rails engine.
 
 In future releases this gem will provide a basic example of how this will look like.
 
@@ -29,6 +29,10 @@ And then execute:
 Or install it yourself as:
 
     $ gem install ropen_pi
+
+## Unsupported
+
+Due to massive changes in the spec, this gem currently does not support any type of collection queries.
 
 ## Usage
 

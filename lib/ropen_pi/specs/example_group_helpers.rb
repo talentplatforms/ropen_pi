@@ -57,25 +57,43 @@ module RopenPi
         content_hash = { 'application/json' => { schema: schema, examples: examples }.compact! || {} }
         request_body(description: description, required: required, content: content_hash)
 
-        if passed_examples.any?
-          # the request_factory is going to have to resolve the different ways that the example can be given
-          # it can contain a 'value' key which is a direct hash (easiest)
-          # it can contain a 'external_value' key which makes an external call to load the json
-          # it can contain a '$ref' key. Which points to #/components/examples/blog
-          passed_examples.each do |passed_example|
-            if passed_example.is_a?(Symbol)
-              example_key_name = passed_example
-              # TODO: write more tests around this adding to the parameter
-              # if symbol try and use save_request_example
-              param_attributes = { name: example_key_name, in: :body, required: required, param_value: example_key_name, schema: schema }
-              parameter(param_attributes)
-            elsif passed_example.is_a?(Hash) && passed_example[:externalValue]
-              param_attributes = { name: passed_example, in: :body, required: required, param_value: passed_example[:externalValue], schema: schema }
-              parameter(param_attributes)
-            elsif passed_example.is_a?(Hash) && passed_example['$ref']
-              param_attributes = { name: passed_example, in: :body, required: required, param_value: passed_example['$ref'], schema: schema }
-              parameter(param_attributes)
-            end
+        return unless passed_examples.any?
+
+        # the request_factory is going to have to resolve the different ways that the example can be given
+        # it can contain a 'value' key which is a direct hash (easiest)
+        # it can contain a 'external_value' key which makes an external call to load the json
+        # it can contain a '$ref' key. Which points to #/components/examples/blog
+        passed_examples.each do |passed_example|
+          if passed_example.is_a?(Symbol)
+            example_key_name = passed_example
+            # TODO: write more tests around this adding to the parameter
+            # if symbol try and use save_request_example
+            param_attributes = {
+              name: example_key_name,
+              in: :body,
+              required: required,
+              param_value: example_key_name,
+              schema: schema
+            }
+            parameter(param_attributes)
+          elsif passed_example.is_a?(Hash) && passed_example[:externalValue]
+            param_attributes = {
+              name: passed_example,
+              in: :body,
+              required: required,
+              param_value: passed_example[:externalValue],
+              schema: schema
+            }
+            parameter(param_attributes)
+          elsif passed_example.is_a?(Hash) && passed_example['$ref']
+            param_attributes = {
+              name: passed_example,
+              in: :body,
+              required: required,
+              param_value: passed_example['$ref'],
+              schema: schema
+            }
+            parameter(param_attributes)
           end
         end
       end
@@ -85,7 +103,8 @@ module RopenPi
         request_body(description: description, required: required, content: content_hash)
       end
 
-      # TODO: add examples to this like we can for json, might be large lift as many assumptions are made on content-type
+      # TODO: add examples to this like we can for json, might be large lift
+      # as many assumptions are made on content-type
       def request_body_xml(schema:,required: false, description: nil, examples: nil)
         passed_examples = Array(examples)
         content_hash = { 'application/xml' => { schema: schema, examples: examples }.compact! || {} }
@@ -185,8 +204,14 @@ module RopenPi
         content_node = example_metadata[:operation][:requestBody][:content]['application/json']
         return unless content_node
 
-        external_example = example_metadata[:operation]&.dig(:parameters)&.detect { |p| p[:in] == :body && p[:name].is_a?(Hash) && p[:name][:externalValue] } || {}
-        ref_example = example_metadata[:operation]&.dig(:parameters)&.detect { |p| p[:in] == :body && p[:name].is_a?(Hash) && p[:name]['$ref'] } || {}
+        external_example = example_metadata[:operation]&.dig(:parameters)&.detect do |p|
+          p[:in] == :body && p[:name].is_a?(Hash) && p[:name][:externalValue]
+        end || {}
+
+        ref_example = example_metadata[:operation]&.dig(:parameters)&.detect do |p|
+          p[:in] == :body && p[:name].is_a?(Hash) && p[:name]['$ref']
+        end || {}
+
         examples_node = content_node[:examples] ||= {}
 
         nodes_to_add = []
@@ -198,7 +223,7 @@ module RopenPi
           other_name = node[:name][:name]
           other_key = node[:name][:externalValue] ? :externalValue : '$ref'
 
-          json_request_examples.merge!(other_name => {other_key => node[:param_value]}) if other_name
+          json_request_examples.merge!(other_name => { other_key => node[:param_value] }) if other_name
         end
       end
 
@@ -213,21 +238,32 @@ module RopenPi
         end
 
         after do |example|
-          body_parameter = example.metadata[:operation]&.dig(:parameters)&.detect { |p| p[:in] == :body && p[:required] }
+          body_parameter = example.metadata[:operation]&.dig(:parameters)&.detect do |p|
+            p[:in] == :body && p[:required]
+          end
 
-          if body_parameter && respond_to?(body_parameter[:name]) && example.metadata[:operation][:requestBody][:content]['application/json']
+          if body_parameter && respond_to?(body_parameter[:name]) && \
+             example.metadata[:operation][:requestBody][:content]['application/json']
             # save response examples by default
             if example.metadata[:response][:examples].nil? || example.metadata[:response][:examples].empty?
-              example.metadata[:response][:examples] = { 'application/json' => JSON.parse(response.body, symbolize_names: true) } unless response.body.to_s.empty?
+              unless response.body.to_s.empty?
+                example.metadata[:response][:examples] = {
+                  'application/json' => JSON.parse(response.body, symbolize_names: true)
+                }
+              end
             end
 
             # save request examples using the let(:param_name) { REQUEST_BODY_HASH } syntax in the test
             if response.code.to_s =~ /^2\d{2}$/
-              example.metadata[:operation][:requestBody][:content]['application/json'] = { examples: {} } unless example.metadata[:operation][:requestBody][:content]['application/json'][:examples]
-              json_request_examples = example.metadata[:operation][:requestBody][:content]['application/json'][:examples]
+              app_json = 'application/json'
+
+              example.metadata[:operation][:requestBody][:content][app_json] = { examples: {} } \
+                unless example.metadata[:operation][:requestBody][:content][app_json][:examples]
+
+              json_request_examples = example.metadata[:operation][:requestBody][:content][app_json][:examples]
               json_request_examples[body_parameter[:name]] = { value: send(body_parameter[:name]) }
 
-              example.metadata[:operation][:requestBody][:content]['application/json'][:examples] = json_request_examples
+              example.metadata[:operation][:requestBody][:content][app_json][:examples] = json_request_examples
             end
           end
 
