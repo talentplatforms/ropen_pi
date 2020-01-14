@@ -20,7 +20,7 @@ module RopenPi
 
         it "delegates to 'describe' with 'path' metadata" do
           expect(subject).to have_received(:describe).with(
-              '/blogs', path_item: { template: '/blogs' }
+            '/blogs', path_item: { template: '/blogs' }
           )
         end
       end
@@ -30,7 +30,7 @@ module RopenPi
 
         it "delegates to 'describe' with 'operation' metadata" do
           expect(subject).to have_received(:describe).with(
-              :post, operation: { verb: :post, summary: 'Creates a blog' }
+            :post, operation: { verb: :post, summary: 'Creates a blog' }
           )
         end
       end
@@ -49,14 +49,14 @@ module RopenPi
 
         it "adds to the 'operation' metadata" do
           expect(api_metadata[:operation]).to match(
-                                                  tags: %w[Blogs Admin],
-                                                  description: 'Some description',
-                                                  operationId: 'createBlog',
-                                                  consumes: ['application/json', 'application/xml'],
-                                                  produces: ['application/json', 'application/xml'],
-                                                  schemes: %w[http https],
-                                                  deprecated: true
-                                              )
+            tags: %w[Blogs Admin],
+            description: 'Some description',
+            operationId: 'createBlog',
+            consumes: ['application/json', 'application/xml'],
+            produces: ['application/json', 'application/xml'],
+            schemes: %w[http https],
+            deprecated: true
+          )
         end
       end
 
@@ -75,15 +75,15 @@ module RopenPi
 
         it "adds to the 'operation' metadata" do
           expect(api_metadata[:operation]).to match(
-                                                  tags: %w[Blogs Admin],
-                                                  description: 'Some description',
-                                                  operationId: 'createBlog',
-                                                  consumes: ['application/json', 'application/xml'],
-                                                  produces: ['application/json', 'application/xml'],
-                                                  schemes: %w[http https],
-                                                  deprecated: true,
-                                                  security: { api_key: [] }
-                                              )
+            tags: %w[Blogs Admin],
+            description: 'Some description',
+            operationId: 'createBlog',
+            consumes: ['application/json', 'application/xml'],
+            produces: ['application/json', 'application/xml'],
+            schemes: %w[http https],
+            deprecated: true,
+            security: { api_key: [] }
+          )
         end
       end
 
@@ -94,8 +94,8 @@ module RopenPi
 
           it 'adds required true by default' do
             expect(api_metadata[:operation][:requestBody]).to match(
-                                                                  required: true, content: { 'application/json' => { schema: { type: 'object' } } }
-                                                              )
+              required: true, content: { 'application/json' => { schema: { type: 'object' } } }
+            )
           end
         end
 
@@ -104,8 +104,8 @@ module RopenPi
 
           it 'adds required false' do
             expect(api_metadata[:operation][:requestBody]).to match(
-                                                                  required: false, content: { 'application/json' => { schema: { type: 'object' } } }
-                                                              )
+              required: false, content: { 'application/json' => { schema: { type: 'object' } } }
+            )
           end
         end
 
@@ -114,8 +114,8 @@ module RopenPi
 
           it 'adds description' do
             expect(api_metadata[:operation][:requestBody]).to match(
-                                                                  description: 'my description', required: true, content: { 'application/json' => { schema: { type: 'object' } } }
-                                                              )
+              description: 'my description', required: true, content: { 'application/json' => { schema: { type: 'object' } } }
+            )
           end
         end
       end
@@ -127,8 +127,8 @@ module RopenPi
 
           it "adds to the 'path_item parameters' metadata" do
             expect(api_metadata[:path_item][:parameters]).to match(
-                                                                  [name: :blog, in: :body, schema: { type: 'object' }]
-                                                              )
+              [name: :blog, in: :body, schema: { type: 'object' }]
+            )
           end
         end
 
@@ -138,8 +138,8 @@ module RopenPi
 
           it "adds to the 'operation parameters' metadata" do
             expect(api_metadata[:operation][:parameters]).to match(
-                                                                  [name: :blog, in: :body, schema: { type: 'object' }]
-                                                              )
+              [name: :blog, in: :body, schema: { type: 'object' }]
+            )
           end
         end
 
@@ -149,8 +149,8 @@ module RopenPi
 
           it "automatically sets the 'required' flag" do
             expect(api_metadata[:operation][:parameters]).to match(
-                                                                  [name: :id, in: :path, required: true]
-                                                              )
+              [name: :id, in: :path, required: true]
+            )
           end
         end
 
@@ -169,7 +169,7 @@ module RopenPi
 
         it "delegates to 'context' with 'response' metadata" do
           expect(subject).to have_received(:context).with(
-              'success', response: { code: '201', description: 'success' }
+            'success', response: { code: '201', description: 'success' }
           )
         end
       end
@@ -189,17 +189,17 @@ module RopenPi
 
         it "adds to the 'response headers' metadata" do
           expect(api_metadata[:response][:headers]).to match(
-                                                            'Date' => {schema: { type: 'string' }}
-                                                        )
+            'Date' => { schema: { type: 'string' } }
+          )
         end
       end
 
       describe '#examples(example)' do
         let(:json_example) do
           {
-              'application/json' => {
-                  foo: 'bar'
-              }
+            'application/json' => {
+              foo: 'bar'
+            }
           }
         end
         let(:api_metadata) { { response: {} } }

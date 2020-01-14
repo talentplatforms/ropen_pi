@@ -5,7 +5,7 @@ module RopenPi
     source_root File.expand_path('templates', __dir__)
 
     def add_open_api_helper
-      template('open_api_helper.rb', 'spec/open_api_helper.rb')
+      template('ropen_pi_helper.rb', 'spec/ropen_pi_helper.rb')
     end
   end
 end

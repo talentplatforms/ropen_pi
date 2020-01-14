@@ -12,8 +12,8 @@ module RopenPi
       let(:root_dir) { 'foobar' }
       let(:open_api_docs) do
         {
-          'v1/swagger.json' => { info: { title: 'v1' } },
-          'v2/swagger.json' => { info: { title: 'v2' } }
+          'v1/openapi.json' => { info: { title: 'v1' } },
+          'v2/openapi.json' => { info: { title: 'v2' } }
         }
       end
 
@@ -61,7 +61,7 @@ module RopenPi
 
         context 'tag provided' do
           context 'matching doc' do
-            let(:tag) { 'v2/swagger.json' }
+            let(:tag) { 'v2/openapi.json' }
 
             it 'returns the matching doc in rspec config' do
               expect(doc).to eq(info: { title: 'v2' })

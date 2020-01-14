@@ -13,8 +13,8 @@ module RopenPi
       run_generator
     end
 
-    it 'installs the open_api_helper for rspec' do
-      assert_file('spec/open_api_helper.rb')
+    it 'installs the ropen_pi_helper for rspec' do
+      assert_file('spec/ropen_pi_helper.rb')
     end
   end
 end

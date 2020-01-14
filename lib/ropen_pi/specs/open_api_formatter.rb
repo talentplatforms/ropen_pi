@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_support/core_ext/hash/deep_merge'
-require 'open_api_helper'
+require 'ropen_pi_helper'
 
 class RopenPi::Specs::OpenApiFormatter
   ::RSpec::Core::Formatters.register self, :example_group_finished, :stop
