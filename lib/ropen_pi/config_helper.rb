@@ -57,17 +57,13 @@ module RopenPi
     end
   end
 
-  module Types
+  module Type
     def self.date_time_type(opts)
-      options = { format: 'date-time' }.merge!(opts)
-
-      string_type(options)
+      string_type(opts).merge(format: 'date-time')
     end
 
     def self.uuid_type(opts)
-      options = { format: 'uuid' }.merge!(opts)
-
-      string_type(options)
+      string_type(opts).merge(format: 'uuid')
     end
 
     def self.string_type(opts)
@@ -79,10 +75,7 @@ module RopenPi
     end
 
     def self.type(thing, opts)
-      hash = { type: thing }
-      hash.merge!(opts) if opts.any?
-
-      hash
+      { type: thing }.merge(opts)
     end
 
     def self.string_array_type(opts)
