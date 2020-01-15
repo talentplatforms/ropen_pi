@@ -1,6 +1,6 @@
 # helper for the open api documentation
 module RopenPi
-  module ConfigHelper
+  module Param
     #
     def self.date_param(name, desc: 'tba')
       param(name, :string, fmt: 'date-time', desc: desc)
@@ -55,24 +55,65 @@ module RopenPi
         enum: values
       }
     end
+  end
 
-    #
+  module Types
+    def self.date_time_type(opts)
+      options = { format: 'date-time' }.merge!(opts)
 
-    def self.collection_response_type(ref, desc: 'tba')
+      string_type(options)
+    end
+
+    def self.uuid_type(opts)
+      options = { format: 'uuid' }.merge!(opts)
+
+      string_type(options)
+    end
+
+    def self.string_type(opts)
+      type('string', opts)
+    end
+
+    def self.integer_type(opts)
+      type('integer', opts)
+    end
+
+    def self.type(thing, opts)
+      hash = { type: thing }
+      hash.merge!(opts) if opts.any?
+
+      hash
+    end
+
+    def self.string_array_type(opts)
+      { type: 'array', items: 'string' }
+    end
+
+    def self.ref_type(ref)
+      { '$ref': ref }
+    end
+  end
+
+  module Response
+    def self.collection(ref, desc: 'tba', type: 'application/json')
       {
         description: desc,
-        type: :object,
-        properties: {
-          data: { type: :array, items: { '$ref': ref } }
+        content: {
+          type => {
+            data: { type: :array, items: { '$ref': ref } }
+          }
         }
       }
     end
 
-    def self.response_type(ref, desc: 'tba')
+    def self.single(ref, desc: 'tba', type: 'application/json')
       {
         description: desc,
-        type: :object,
-        properties: { data: { '$ref': ref } }
+        content: {
+          type => {
+            data: { '$ref': ref }
+          }
+        }
       }
     end
   end
