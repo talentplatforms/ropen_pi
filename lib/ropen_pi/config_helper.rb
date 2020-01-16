@@ -83,7 +83,12 @@ module RopenPi
     end
 
     def self.string_array_type(opts = {})
-      { type: 'array', items: 'string' }.merge(opts)
+      {
+        type: 'array',
+        items: {
+          type: 'string'
+        }
+       }.merge(opts)
     end
 
     def self.ref_type(ref)
