@@ -92,7 +92,7 @@ module RopenPi
   end
 
   module Response
-    def self.collection(ref, desc: 'tba', type: RopenPi.APP_JSON)
+    def self.collection(ref, desc: 'tba', type: RopenPi::APP_JSON)
       {
         description: desc,
         content: {
@@ -103,7 +103,7 @@ module RopenPi
       }
     end
 
-    def self.single(ref, desc: 'tba', type: RopenPi.APP_JSON)
+    def self.single(ref, desc: 'tba', type: RopenPi::APP_JSON)
       {
         description: desc,
         content: {
