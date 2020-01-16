@@ -78,6 +78,10 @@ module RopenPi
       type('integer', opts)
     end
 
+    def self.bool_type(opts = {})
+      type('boolean', opts)
+    end
+
     def self.type(thing, opts = {})
       { type: thing }.merge(opts)
     end
