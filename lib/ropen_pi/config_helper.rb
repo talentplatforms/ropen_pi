@@ -1,5 +1,7 @@
 # helper for the open api documentation
 module RopenPi
+  APP_JSON = 'application/json'.freeze
+
   module Param
     #
     def self.date_param(name, desc: 'tba')
@@ -92,7 +94,7 @@ module RopenPi
   end
 
   module Response
-    def self.collection(ref, desc: 'tba', type: 'application/json')
+    def self.collection(ref, desc: 'tba', type: RopenPi.APP_JSON)
       {
         description: desc,
         content: {
@@ -103,7 +105,7 @@ module RopenPi
       }
     end
 
-    def self.single(ref, desc: 'tba', type: 'application/json')
+    def self.single(ref, desc: 'tba', type: RopenPi.APP_JSON)
       {
         description: desc,
         content: {
