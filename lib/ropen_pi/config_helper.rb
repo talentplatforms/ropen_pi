@@ -62,6 +62,10 @@ module RopenPi
       string_type(opts).merge(format: 'date-time')
     end
 
+    def self.email_type(opts = {})
+      string_type(opts).merge(format: 'email')
+    end
+
     def self.uuid_type(opts = {})
       string_type(opts).merge(format: 'uuid')
     end
