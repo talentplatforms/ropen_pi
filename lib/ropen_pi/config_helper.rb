@@ -58,27 +58,27 @@ module RopenPi
   end
 
   module Type
-    def self.date_time_type(opts)
+    def self.date_time_type(opts = {})
       string_type(opts).merge(format: 'date-time')
     end
 
-    def self.uuid_type(opts)
+    def self.uuid_type(opts = {})
       string_type(opts).merge(format: 'uuid')
     end
 
-    def self.string_type(opts)
+    def self.string_type(opts = {})
       type('string', opts)
     end
 
-    def self.integer_type(opts)
+    def self.integer_type(opts = {})
       type('integer', opts)
     end
 
-    def self.type(thing, opts)
+    def self.type(thing, opts = {})
       { type: thing }.merge(opts)
     end
 
-    def self.string_array_type(opts)
+    def self.string_array_type(opts = {})
       { type: 'array', items: 'string' }
     end
 
