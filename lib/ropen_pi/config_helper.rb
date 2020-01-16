@@ -85,9 +85,7 @@ module RopenPi
     def self.string_array_type(opts = {})
       {
         type: 'array',
-        items: {
-          type: 'string'
-        }
+        items: { type: 'string' }
        }.merge(opts)
     end
 
