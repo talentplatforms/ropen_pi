@@ -3,6 +3,7 @@ require 'hashie'
 
 module RopenPi
   module Specs
+    # rubocop:disable Metrics/ModuleLength
     module ExampleGroupHelpers
       def path(template, metadata = {}, &block)
         metadata[:path_item] = { template: template }
@@ -57,46 +58,50 @@ module RopenPi
         content_hash = { 'application/json' => { schema: schema, examples: examples }.compact! || {} }
         request_body(description: description, required: required, content: content_hash)
 
-        return unless passed_examples.any?
+        handle_examples(schema: schema, examples: passed_examples, required: required) if passed_examples.any?
+      end
 
+      # rubocop:disable Metrics/MethodLength
+      def handle_examples(schema:, examples:, required:)
         # the request_factory is going to have to resolve the different ways that the example can be given
         # it can contain a 'value' key which is a direct hash (easiest)
         # it can contain a 'external_value' key which makes an external call to load the json
         # it can contain a '$ref' key. Which points to #/components/examples/blog
-        passed_examples.each do |passed_example|
-          if passed_example.is_a?(Symbol)
-            example_key_name = passed_example
-            # TODO: write more tests around this adding to the parameter
-            # if symbol try and use save_request_example
-            param_attributes = {
-              name: example_key_name,
-              in: :body,
-              required: required,
-              param_value: example_key_name,
-              schema: schema
-            }
-            parameter(param_attributes)
-          elsif passed_example.is_a?(Hash) && passed_example[:externalValue]
-            param_attributes = {
-              name: passed_example,
-              in: :body,
-              required: required,
-              param_value: passed_example[:externalValue],
-              schema: schema
-            }
-            parameter(param_attributes)
-          elsif passed_example.is_a?(Hash) && passed_example['$ref']
-            param_attributes = {
-              name: passed_example,
-              in: :body,
-              required: required,
-              param_value: passed_example['$ref'],
-              schema: schema
-            }
-            parameter(param_attributes)
-          end
+        # rubocop:disable Metrics/BlockLength
+        examples.each do |passed_example|
+          param_attributes =  if passed_example.is_a?(Symbol)
+                                example_key_name = passed_example
+                                # TODO: write more tests around this adding to the parameter
+                                # if symbol try and use save_request_example
+                                {
+                                  name: example_key_name,
+                                  in: :body,
+                                  required: required,
+                                  param_value: example_key_name,
+                                  schema: schema
+                                }
+                              elsif passed_example.is_a?(Hash) && passed_example[:externalValue]
+                                {
+                                  name: passed_example,
+                                  in: :body,
+                                  required: required,
+                                  param_value: passed_example[:externalValue],
+                                  schema: schema
+                                }
+                              elsif passed_example.is_a?(Hash) && passed_example['$ref']
+                                {
+                                  name: passed_example,
+                                  in: :body,
+                                  required: required,
+                                  param_value: passed_example['$ref'],
+                                  schema: schema
+                                }
+                              end
+          parameter(param_attributes)
         end
+        # rubocop:enable Metrics/BlockLength
       end
+      # rubocop:enable Metrics/MethodLength
 
       def request_body_text_plain(required: false, description: nil, examples: nil)
         content_hash = { 'test/plain' => { schema: {type: :string}, examples: examples }.compact! || {} }
@@ -273,5 +278,6 @@ module RopenPi
         end
       end
     end
+    # rubocop:enable Metrics/ModuleLength
   end
 end
