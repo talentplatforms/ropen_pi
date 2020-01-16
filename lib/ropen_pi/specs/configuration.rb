@@ -29,12 +29,6 @@ class RopenPi::Specs::Configuration
     end
   end
 
-  def dry_run
-    @dry_run ||= begin
-      @rspec_config.dry_run.nil? || @rspec_config.dry_run
-    end
-  end
-
   def get_doc(name)
     return open_api_docs.values.first if name.nil?
 

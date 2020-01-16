@@ -7,14 +7,13 @@ require 'ropen_pi/specs/railtie' if defined?(Rails::Railtie)
 module RopenPi
   module Specs
     # Extend RSpec with a swagger-based DSL
-    ::RSpec.configure do |c|
-      c.add_setting :root_dir
-      c.add_setting :open_api_docs
-      c.add_setting :dry_run
-      c.add_setting :open_api_output_format
+    ::RSpec.configure do |config|
+      config.add_setting :root_dir
+      config.add_setting :open_api_docs
+      config.add_setting :open_api_output_format
 
-      c.extend ExampleGroupHelpers, type: :request
-      c.include ExampleHelpers, type: :request
+      config.extend ExampleGroupHelpers, type: :request
+      config.include ExampleHelpers, type: :request
     end
 
     def self.config

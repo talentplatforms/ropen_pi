@@ -1,7 +1,5 @@
 # helper for the open api documentation
 module RopenPi
-  APP_JSON = 'application/json'.freeze
-
   module Param
     #
     def self.date_param(name, desc: 'tba')
