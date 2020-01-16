@@ -83,7 +83,7 @@ module RopenPi
     end
 
     def self.string_array_type(opts = {})
-      { type: 'array', items: 'string' }
+      { type: 'array', items: 'string' }.merge(opts)
     end
 
     def self.ref_type(ref)
@@ -92,12 +92,16 @@ module RopenPi
   end
 
   module Response
+    # rubocop:disable Metrics/MethodLength
     def self.collection(ref, desc: 'tba', type: RopenPi::APP_JSON)
       {
         description: desc,
         content: {
           type => {
-            data: { type: :array, items: { '$ref': ref } }
+            schema: {
+              type: 'object',
+              properties: { data: { type: :array, items: { '$ref': ref } } }
+            }
           }
         }
       }
@@ -108,10 +112,14 @@ module RopenPi
         description: desc,
         content: {
           type => {
-            data: { '$ref': ref }
+            schema: {
+              type: 'object',
+              properties: { data: { '$ref': ref } }
+            }
           }
         }
       }
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end
