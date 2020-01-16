@@ -228,6 +228,8 @@ module RopenPi
       end
 
       def run_test!(&block)
+        app_json = 'application/json'
+
         before do |example|
           submit_request(example.metadata)
         end
@@ -243,19 +245,19 @@ module RopenPi
           end
 
           if body_parameter && respond_to?(body_parameter[:name]) && \
-             example.metadata[:operation][:requestBody][:content]['application/json']
+             example.metadata[:operation][:requestBody][:content][app_json]
+
             # save response examples by default
             if example.metadata[:response][:examples].nil? || example.metadata[:response][:examples].empty?
               unless response.body.to_s.empty?
                 example.metadata[:response][:examples] = {
-                  'application/json' => JSON.parse(response.body, symbolize_names: true)
+                  app_json => JSON.parse(response.body, symbolize_names: true)
                 }
               end
             end
 
             # save request examples using the let(:param_name) { REQUEST_BODY_HASH } syntax in the test
             if response.code.to_s =~ /^2\d{2}$/
-              app_json = 'application/json'
 
               example.metadata[:operation][:requestBody][:content][app_json] = { examples: {} } \
                 unless example.metadata[:operation][:requestBody][:content][app_json][:examples]

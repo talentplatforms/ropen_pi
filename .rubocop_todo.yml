@@ -28,12 +28,7 @@ Metrics/MethodLength:
 
 # Offense count: 2
 Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'app/models/application_record.rb'
-    - 'config/application.rb'
-    - 'db/migrate/*.rb'
+  Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.
