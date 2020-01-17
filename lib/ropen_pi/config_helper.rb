@@ -2,44 +2,46 @@
 module RopenPi
   module Param
     #
-    def self.date_param(name, desc: 'tba')
-      param(name, :string, fmt: 'date-time', desc: desc)
+    def self.date_param(name, desc: 'tba', opts: {})
+      param(name, :string, fmt: 'date-time', desc: desc, opts: opts)
     end
 
-    def self.uuid_param(name, desc: 'tba')
-      param(name, :string, fmt: 'uuid', desc: desc)
+    def self.uuid_param(name, desc: 'tba', opts: {})
+      param(name, :string, fmt: 'uuid', desc: desc, opts: opts)
     end
 
-    def self.string_param(name, desc: 'tba')
-      param(name, :string, desc: desc)
+    def self.string_param(name, desc: 'tba', opts: {})
+      param(name, :string, desc: desc, opts: opts)
     end
 
-    def self.int_param(name, desc: 'tba')
-      param(name, :integer, desc: desc)
+    def self.int_param(name, desc: 'tba', opts: {})
+      param(name, :integer, desc: desc, opts: opts)
     end
 
-    def self.bool_param(name, desc: 'tba')
-      param(name, :boolean, desc: desc)
+    def self.bool_param(name, desc: 'tba', opts: {})
+      param(name, :boolean, desc: desc, opts: opts)
     end
 
-    def self.ref_param(name, ref, desc: 'tba')
-      param(name, 'null', desc: desc).merge(schema: { '$ref': ref })
+    def self.ref_param(name, ref, desc: 'tba', opts: {})
+      param(name, 'null', desc: desc, opts: opts).merge(schema: { '$ref': ref })
     end
 
-    def self.param_in_path(name, schema_type, fmt: nil, desc: 'tba')
-      param(name, schema_type, fmt: fmt, desc: desc).merge(
-        in: :path,
-        required: true
-      )
+    def self.param_in_path(name, schema_type, fmt: nil, desc: 'tba', opts: {})
+      param(name, schema_type, fmt: fmt, desc: desc, opts: opts)
+        .merge(
+          in: :path,
+          required: true
+        )
+        .merge(opts)
     end
 
-    def self.param(name, schema_type, fmt: nil, desc: 'tba')
+    def self.param(name, schema_type, fmt: nil, desc: 'tba', opts: {})
       {
         name: name.to_s,
         description: desc,
         in: :query,
         schema: schema(schema_type, fmt: fmt)
-      }
+      }.merge(opts)
     end
 
     def self.schema(type, fmt: nil)
