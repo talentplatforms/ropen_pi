@@ -59,27 +59,27 @@ module RopenPi
 
   module Type
     def self.date_time_type(opts = {})
-      string_type(opts).merge(format: 'date-time')
+      string_type(opts).merge(format: 'date-time', example: '2020-02-02')
     end
 
     def self.email_type(opts = {})
-      string_type(opts).merge(format: 'email')
+      string_type(opts).merge(format: 'email', example: 'han.solo@example.com')
     end
 
     def self.uuid_type(opts = {})
-      string_type(opts).merge(format: 'uuid')
+      string_type(opts).merge(format: 'uuid', example: 'abcd12-1234ab-abcdef123')
     end
 
     def self.string_type(opts = {})
-      type('string', opts)
+      type('string', opts).merge(example: 'Example string')
     end
 
     def self.integer_type(opts = {})
-      type('integer', opts)
+      type('integer', opts).merge(example: 1)
     end
 
     def self.bool_type(opts = {})
-      type('boolean', opts)
+      type('boolean', opts).merge(example: true)
     end
 
     def self.type(thing, opts = {})
@@ -89,7 +89,7 @@ module RopenPi
     def self.string_array_type(opts = {})
       {
         type: 'array',
-        items: { type: 'string' }
+        items: { type: 'string', example: 'Example string' }
        }.merge(opts)
     end
 
