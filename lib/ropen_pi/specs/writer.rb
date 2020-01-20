@@ -9,8 +9,10 @@ module RopenPi::Specs
     end
 
     module Yml
+      require 'active_support/core_ext/hash/keys'
+
       def self.convert(doc)
-        doc.to_yaml
+        doc.deep_stringify_keys.to_yaml
       end
     end
 
