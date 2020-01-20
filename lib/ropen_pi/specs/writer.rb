@@ -10,7 +10,7 @@ module RopenPi::Specs
 
     module Yml
       def self.convert(doc)
-        doc.to_yml
+        doc.to_yaml
       end
     end
 
