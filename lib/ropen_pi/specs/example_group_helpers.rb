@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# @TODO: replace hashie!
 require 'hashie'
 
 module RopenPi
@@ -130,7 +131,7 @@ module RopenPi
         end
 
         property_hashes = hash_locator.flat_map do |locator|
-          locator.select { |_k,v| file_properties.include?(v) }
+          locator.select { |_k, v| file_properties.include?(v) }
         end
 
         existing_keys = []

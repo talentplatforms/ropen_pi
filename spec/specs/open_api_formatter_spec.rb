@@ -20,6 +20,7 @@ module RopenPi
       describe '#example_group_finished(notification)' do
         before do
           allow(config).to receive(:get_doc).and_return(open_api_doc)
+          allow(config).to receive(:open_api_output_format).and_return(:json)
           subject.example_group_finished(notification)
         end
 
@@ -57,6 +58,7 @@ module RopenPi
             'v1/open_api.json' => { info: { version: 'v1' } },
             'v2/open_api.json' => { info: { version: 'v2' } }
           )
+          allow(config).to receive(:open_api_output_format).and_return(:json)
           subject.stop(notification)
         end
 

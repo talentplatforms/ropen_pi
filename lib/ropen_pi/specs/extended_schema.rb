@@ -28,4 +28,3 @@ module RopenPi
     JSON::Validator.register_validator(ExtendedSchema.new)
   end
 end
-

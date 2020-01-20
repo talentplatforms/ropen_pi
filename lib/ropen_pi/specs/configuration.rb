@@ -15,7 +15,7 @@ class RopenPi::Specs::Configuration
 
   def open_api_output_format
     @open_api_output_format ||= begin
-      @rspec_config.open_api_output_format
+      @rspec_config.open_api_output_format || :json
     end
   end
 
