@@ -77,8 +77,8 @@ class RopenPi::Specs::RequestFactory
   def add_path(request, metadata, open_api_doc, parameters, example)
     template = (open_api_doc[:basePath] || '') + metadata[:path_item][:template]
 
-    in_path = parameters.select { |p| p[:in] == :path }
-    in_query = parameters.select { |p| p[:in] == :query }
+    in_path = parameters.select { |p| p[:in].to_sym == :path }
+    in_query = parameters.select { |p| p[:in].to_sym == :query }
 
     request[:path] = template.tap do |inner_template|
       in_path.each do |p|

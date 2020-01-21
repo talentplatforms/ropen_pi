@@ -111,7 +111,7 @@ module RopenPi
 
       # TODO: add examples to this like we can for json, might be large lift
       # as many assumptions are made on content-type
-      def request_body_xml(schema:,required: false, description: nil, examples: nil)
+      def request_body_xml(schema:, required: false, description: nil, examples: nil)
         passed_examples = Array(examples)
         content_hash = { 'application/xml' => { schema: schema, examples: examples }.compact! || {} }
         request_body(description: description, required: required, content: content_hash)
@@ -165,7 +165,7 @@ module RopenPi
       end
 
       def schema(value, content_type: 'application/json')
-        content_hash = {content_type => {schema: value}}
+        content_hash = { content_type => { schema: value } }
         metadata[:response][:content] = content_hash
       end
 
@@ -173,7 +173,7 @@ module RopenPi
         metadata[:response][:headers] ||= {}
 
         if attributes[:type] && attributes[:schema].nil?
-          attributes[:schema] = {type: attributes[:type]}
+          attributes[:schema] = { type: attributes[:type] }
           attributes.delete(:type)
         end
 

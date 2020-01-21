@@ -12,7 +12,10 @@ module RopenPi::Specs
       require 'active_support/core_ext/hash/keys'
 
       def self.convert(doc)
-        doc.deep_stringify_keys.to_yaml
+        doc.deep_stringify_keys!
+        doc.deep_transform_values { |value| value.to_s if value.is_a?(Symbol) }
+
+        doc.to_yaml
       end
     end
 
