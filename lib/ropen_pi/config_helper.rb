@@ -29,7 +29,7 @@ module RopenPi
     def self.param_in_path(name, schema_type, fmt: nil, desc: 'tba', opts: {})
       param(name, schema_type, fmt: fmt, desc: desc, opts: opts)
         .merge(
-          in: 'path',
+          in: :path,
           required: true
         )
         .merge(opts)
@@ -39,21 +39,21 @@ module RopenPi
       {
         name: name.to_s,
         description: desc,
-        in: 'query',
+        in: :query,
         schema: schema(schema_type, fmt: fmt)
       }.merge(opts)
     end
 
     def self.schema(type, fmt: nil)
       {}.tap do |schema|
-        schema[:type] = type.to_s
-        schema[:format] = fmt.to_s if fmt.present?
+        schema[:type] = type
+        schema[:format] = fmt if fmt.present?
       end
     end
 
     def self.schema_enum(values, type: :string)
       {
-        type: type.to_s,
+        type: type,
         enum: values
       }
     end
@@ -85,7 +85,7 @@ module RopenPi
     end
 
     def self.type(thing, opts = {})
-      { type: thing.to_s }.merge(opts)
+      { type: thing }.merge(opts)
     end
 
     def self.string_array_type(opts = {})
@@ -109,7 +109,7 @@ module RopenPi
           type => {
             schema: {
               type: 'object',
-              properties: { data: { type: 'array', items: { '$ref': ref } } }
+              properties: { data: { type: :array, items: { '$ref': ref } } }
             }
           }
         }
