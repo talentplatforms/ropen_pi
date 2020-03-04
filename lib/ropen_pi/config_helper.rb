@@ -57,6 +57,9 @@ module RopenPi
         enum: values
       }
     end
+
+    alias boolean_param bool_param
+    alias integer_param int_param
   end
 
   module Type
@@ -77,7 +80,7 @@ module RopenPi
     end
 
     def self.integer_type(opts = {})
-      type('integer', opts).merge(example: 1)
+      type('integer').merge(opts.merge(example: 1))
     end
 
     def self.bool_type(opts = {})
@@ -98,6 +101,9 @@ module RopenPi
     def self.ref_type(ref)
       { '$ref': ref }
     end
+
+    alias bool_type boolean_type
+    alias int_type integer_type
   end
 
   module Response
