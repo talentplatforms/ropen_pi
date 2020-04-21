@@ -83,5 +83,33 @@ module RopenPi
         expect(RopenPi::Type.integer_type({ example: 2 })).to eq(expected_result)
       end
     end
+
+    describe '#type' do
+      it "called without opt parameters" do
+        expected_result = { type: "integer"}
+
+        expect(RopenPi::Type.type("integer")).to eq(expected_result)
+      end
+
+      it "called with opt parameters" do
+        expected_result = { type: "sith", side: "darkside" }
+
+        expect(RopenPi::Type.type("sith", { side: "darkside" })).to eq(expected_result)
+      end
+    end
+
+    describe '#string_array_type' do
+      it "called without opt parameters" do
+        expected_result = { items: { example: "Example string", type: "string"}, type: "array"}
+
+        expect(RopenPi::Type.string_array_type).to eq(expected_result)
+      end
+
+      it "called with opt parameters" do
+        expected_result = { items: { example: "Example string", type: "string"}, type: "array", test: "123"}
+
+        expect(RopenPi::Type.string_array_type({ test: "123" })).to eq(expected_result)
+      end
+    end
   end
 end

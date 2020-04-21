@@ -62,7 +62,6 @@ module RopenPi
       alias boolean_param bool_param
       alias integer_param int_param
     end
-    
   end
 
   module Type
@@ -105,8 +104,10 @@ module RopenPi
       { '$ref': ref }
     end
 
-    # alias bool_type boolean_type
-    # alias int_type integer_type
+    class << self  
+      alias boolean_type bool_type
+      alias int_type integer_type
+    end
   end
 
   module Response
