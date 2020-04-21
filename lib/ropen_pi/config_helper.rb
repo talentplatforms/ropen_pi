@@ -58,33 +58,36 @@ module RopenPi
       }
     end
 
-    alias boolean_param bool_param
-    alias integer_param int_param
+    class << self  
+      alias boolean_param bool_param
+      alias integer_param int_param
+    end
+    
   end
 
   module Type
-    def self.date_time_type(opts = {})
-      string_type(opts).merge(format: 'date-time', example: '2020-02-02')
+    def self.date_time_type(opts = { example: '2020-02-02' })
+      string_type(opts).merge(format: 'date-time')
     end
 
-    def self.email_type(opts = {})
-      string_type(opts).merge(format: 'email', example: 'han.solo@example.com')
+    def self.email_type(opts = { example: 'han.solo@example.com' })
+      string_type(opts).merge(format: 'email')
     end
 
-    def self.uuid_type(opts = {})
-      string_type(opts).merge(format: 'uuid', example: 'abcd12-1234ab-abcdef123')
+    def self.uuid_type(opts = { example: 'abcd12-1234ab-abcdef123' })
+      string_type(opts).merge(format: 'uuid')
     end
 
-    def self.string_type(opts = {})
-      type('string', opts).merge(example: 'Example string')
+    def self.string_type(opts = { example: 'Example string' })
+      type('string', opts)
     end
 
-    def self.integer_type(opts = {})
-      type('integer').merge(opts.merge(example: 1))
+    def self.integer_type(opts = { example: 1 })
+      type('integer', opts)
     end
 
-    def self.bool_type(opts = {})
-      type('boolean', opts).merge(example: true)
+    def self.bool_type(opts = { example: true })
+      type('boolean', opts)
     end
 
     def self.type(thing, opts = {})
@@ -102,8 +105,8 @@ module RopenPi
       { '$ref': ref }
     end
 
-    alias bool_type boolean_type
-    alias int_type integer_type
+    # alias bool_type boolean_type
+    # alias int_type integer_type
   end
 
   module Response
