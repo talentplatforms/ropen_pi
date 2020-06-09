@@ -17,7 +17,7 @@ module RopenPi
 
       describe '#path(path)' do
         before { subject.path('/blogs') }
-
+        
         it "delegates to 'describe' with 'path' metadata" do
           expect(subject).to have_received(:describe).with(
             '/blogs', path_item: { template: '/blogs' }

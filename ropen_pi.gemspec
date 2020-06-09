@@ -27,8 +27,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.9"
   spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "bump"
-  spec.add_development_dependency "rails", "~> 6.0.3.1"
   spec.add_development_dependency "bundler-audit"
+  spec.add_development_dependency "rails", "~> 6.0.3.1"
 
   #
   # spec.add_runtime_dependency "dry_open_api", "~> 0.1.1"

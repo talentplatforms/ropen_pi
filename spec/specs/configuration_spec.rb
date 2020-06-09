@@ -5,7 +5,7 @@ require 'ostruct'
 
 module RopenPi
   module Specs
-    describe Configuration do
+    RSpec.describe Configuration do
       subject { described_class.new(rspec_config) }
 
       let(:rspec_config) { OpenStruct.new(root_dir: root_dir, open_api_docs: open_api_docs) }
