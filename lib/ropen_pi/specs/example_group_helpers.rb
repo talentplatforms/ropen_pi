@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # @TODO: replace hashie!
 require 'hashie'
 
@@ -105,18 +106,19 @@ module RopenPi
       # rubocop:enable Metrics/MethodLength
 
       def request_body_text_plain(required: false, description: nil, examples: nil)
-        content_hash = { 'test/plain' => { schema: {type: :string}, examples: examples }.compact! || {} }
+        content_hash = { 'test/plain' => { schema: { type: :string }, examples: examples }.compact! || {} }
         request_body(description: description, required: required, content: content_hash)
       end
 
       # TODO: add examples to this like we can for json, might be large lift
       # as many assumptions are made on content-type
       def request_body_xml(schema:, required: false, description: nil, examples: nil)
-        passed_examples = Array(examples)
+        # passed_examples = Array(examples)
         content_hash = { 'application/xml' => { schema: schema, examples: examples }.compact! || {} }
         request_body(description: description, required: required, content: content_hash)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def request_body_multipart(schema:, description: nil)
         content_hash = { 'multipart/form-data' => { schema: schema } }
         request_body(description: description, content: content_hash)
@@ -145,6 +147,7 @@ module RopenPi
           end
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def parameter(attributes)
         attributes[:required] = true if attributes[:in] && attributes[:in].to_sym == :path
