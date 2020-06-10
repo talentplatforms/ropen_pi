@@ -161,7 +161,7 @@ class RopenPi::Specs::RequestFactory
     # Rails test infrastructure allows us to send the values directly as a hash
     # PROS: simple to implement, CONS: serialization/deserialization is bypassed in test
     tuples = parameters.select { |p| p[:in] == :formData }
-                        .map { |p| [p[:name], example.send(p[:name])] }
+                       .map { |p| [p[:name], example.send(p[:name])] }
     Hash[tuples]
   end
 
