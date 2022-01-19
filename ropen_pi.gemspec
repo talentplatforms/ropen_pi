@@ -22,16 +22,16 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 2.0"
+  spec.add_development_dependency "bundler", "~> 2"
   spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.9"
+  spec.add_development_dependency "rspec", "~> 3.10"
   spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "bump"
   spec.add_development_dependency "bundler-audit"
-  spec.add_development_dependency "rails", "~> 6.0.3.1"
+  spec.add_development_dependency "rails", "~> 6.1.4.4"
+  spec.add_development_dependency "solargraph", "0.44.2"
 
-  #
-  # spec.add_runtime_dependency "dry_open_api", "~> 0.1.1"
   spec.add_runtime_dependency "hashie"
   spec.add_runtime_dependency "json-schema"
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

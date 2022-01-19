@@ -2,3 +2,7 @@
 inherit_from:
   - https://raw.githubusercontent.com/talentplatforms/shared-rubocop/master/.talentplatforms-rubocop.yml
   - .rubocop_todo.yml
+
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable

@@ -11,10 +11,6 @@ x-shared-env: &shared
 
 networks:
   net__backend: ~
-
-  netext__traefik:
-    external: true
-
 volumes:
   # saves the gems as a mount that's used by docker
   bundle: ~
@@ -51,7 +47,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    image: postgres:10-alpine
+    image: postgres:12-alpine
     networks:
       - net__backend
     ports:

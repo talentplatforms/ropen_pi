@@ -1,3 +1,5 @@
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+
 # RopenPi
 
 This is a fork of the [open-api-rswag gem](https://github.com/jdanielian/open-api-rswag).
@@ -8,11 +10,6 @@ There are easier ways to get an instance of the swagger ui running than building
 In future releases this gem will provide a basic example of how this will look like.
 
 In the mean time this will remain a WIP :)
-
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ropen_pi`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -40,9 +37,12 @@ TODO: Write usage instructions here
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+So you have decided to contribute?! This sounds great!
+To make it super easy to start the only thing you have to have installed is Docker.
+Then you can just use the batteries-included DevContainer for VSCode.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+There is a lot of documentation on getting started with this kind of development.
+If you are kind of new to this please make sure to read the offical [docs over at Microsoft](https://code.visualstudio.com/docs/remote/containers).
 
 ## Contributing
 
