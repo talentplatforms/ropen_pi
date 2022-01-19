@@ -8,6 +8,22 @@ module RopenPi
 
         expect(RopenPi::Param.param(:uuid, 'null')).to eq(expected_result)
       end
+
+      describe '#header' do
+        it 'accepts a param set in the header section' do
+          expected = {
+            name: 'Accept-Encoding',
+            description: 'tba',
+            in: 'header',
+            required: false,
+            schema: {
+              type: 'string'
+            }
+          }
+
+          expect(RopenPi::Param.param_in_header(:'Accept-Encoding', 'string')).to eq(expected)
+        end
+      end
     end
 
     # TODO; extend test cases to ("catch") cover them all

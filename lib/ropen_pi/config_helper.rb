@@ -35,6 +35,15 @@ module RopenPi
         .merge(opts)
     end
 
+    def self.param_in_header(name, schema_type, fmt: nil, desc: 'tba', opts: {})
+      param(name, schema_type, fmt: fmt, desc: desc, opts: opts)
+        .merge(
+          in: 'header',
+          required: false
+        )
+        .merge(opts)
+    end
+
     def self.param(name, schema_type, fmt: nil, desc: 'tba', opts: {})
       {
         name: name.to_s,
@@ -58,7 +67,7 @@ module RopenPi
       }
     end
 
-    class << self  
+    class << self
       alias boolean_param bool_param
       alias integer_param int_param
     end
@@ -97,21 +106,20 @@ module RopenPi
       {
         type: 'array',
         items: { type: 'string', example: 'Example string' }
-       }.merge(opts)
+      }.merge(opts)
     end
 
     def self.ref_type(ref)
       { '$ref': ref }
     end
 
-    class << self  
+    class << self
       alias boolean_type bool_type
       alias int_type integer_type
     end
   end
 
   module Response
-    # rubocop:disable Metrics/MethodLength
     def self.collection(ref, desc: 'tba', type: RopenPi::APP_JSON)
       {
         description: desc,
@@ -139,6 +147,5 @@ module RopenPi
         }
       }
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end
