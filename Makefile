@@ -1,11 +1,20 @@
+################################################################################
+# DEV-CONTAINER
+
 devcon_init:
 	@echo 'init devcontainer'
-	sudo chown vscode:vscode -R /bundle
-	sudo chown vscode:vscode -R .
+	make devcon_chown
 	npm install
 	npm audit fix
 	npx husky install
 	bundle check || bundle
+
+devcon_chown:
+	sudo chown vscode:vscode -R /bundle
+	sudo chown vscode:vscode -R .
+
+################################################################################
+# RELEASE STUFF
 
 minor:
 	bump minor
@@ -23,6 +32,8 @@ _VERSION=$(shell bump current | sed 's/Current version: //')
 push:
 	gem push ropen_pi-${_VERSION}.gem
 
+################################################################################
+# HELPER
 
 lint:
 	rubocop
