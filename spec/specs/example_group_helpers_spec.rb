@@ -17,7 +17,7 @@ module RopenPi
 
       describe '#path(path)' do
         before { subject.path('/blogs') }
-        
+
         it "delegates to 'describe' with 'path' metadata" do
           expect(subject).to have_received(:describe).with(
             '/blogs', path_item: { template: '/blogs' }
@@ -175,7 +175,7 @@ module RopenPi
       end
 
       describe '#schema(value)' do
-        before { subject.schema(type: 'object') }
+        before { subject.schema({ type: 'object' }) }
         let(:api_metadata) { { response: {} } }
 
         it "adds to the 'response' metadata" do
