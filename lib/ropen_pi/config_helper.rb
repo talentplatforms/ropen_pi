@@ -82,7 +82,7 @@ module RopenPi
       string_type(opts).merge(format: 'email')
     end
 
-    def self.uuid_type(opts = { example: 'abcd12-1234ab-abcdef123' })
+    def self.uuid_type(opts = { example: Digest::UUID.uuid_v5(Digest::UUID::OID_NAMESPACE, 'abcd12-1234ab-abcdef123') })
       string_type(opts).merge(format: 'uuid')
     end
 

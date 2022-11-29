@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "bump"
   spec.add_development_dependency "bundler-audit"
-  spec.add_development_dependency "rails", "~> 6.1.4.4"
+  spec.add_development_dependency "rails", "~> 6.1.7"
   spec.add_development_dependency "solargraph", "0.44.2"
 
   spec.add_runtime_dependency "hashie"
